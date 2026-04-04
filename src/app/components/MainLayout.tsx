@@ -1,4 +1,4 @@
-import { Outlet, Link, useLocation } from "react-router";
+import { Outlet, Link, useLocation, useNavigate } from "react-router";
 import { useState } from "react";
 import {
   LayoutDashboard,
@@ -333,6 +333,7 @@ export function MainLayout() {
     HutbaLive: true,
   });
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navigationStructure = getNavigationStructure(userRole, organizationModules);
 
@@ -416,12 +417,21 @@ export function MainLayout() {
             const Icon = group.icon;
             const isExpanded = expandedSections[group.section];
             const hasActiveItem = group.items.some((item: any) => location.pathname === item.path);
+            const defaultPath = group.items[0]?.path; // First item as default
 
             return (
               <div key={group.section}>
                 {/* Section Header */}
                 <button
-                  onClick={() => toggleSection(group.section)}
+                  onClick={() => {
+                    // If collapsed, navigate to first item
+                    if (sidebarCollapsed && !mobileMenuOpen && defaultPath) {
+                      navigate(defaultPath);
+                    } else {
+                      // Otherwise, toggle accordion
+                      toggleSection(group.section);
+                    }
+                  }}
                   className={`w-full flex items-center gap-3 px-2 sm:px-3 py-2 sm:py-2.5 rounded-xl text-sm transition-all ${
                     hasActiveItem
                       ? "bg-gradient-to-r from-[#F0FDFA] to-[#E6FAF5] text-[#0F766E] font-medium"

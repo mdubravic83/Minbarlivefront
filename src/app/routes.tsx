@@ -18,6 +18,7 @@ import { PlatformControl } from "./components/PlatformControl";
 import { PlatformOrganizations } from "./components/PlatformOrganizations";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
+import { TestRoute } from "./test-route";
 
 // Placeholder components
 function Settings() {
@@ -120,12 +121,15 @@ export const router = createBrowserRouter([
       { path: "dashboard/activity", Component: DashboardActivity },
       { path: "dashboard/alerts", Component: DashboardAlerts },
       // HutbaLive with submenus
+      { path: "hutba-live", Component: HutbaLive }, // Default route redirects to sessions
       { path: "hutba-live/sessions", Component: HutbaLive },
       { path: "hutba-live/active", Component: HutbaLive },
       { path: "hutba-live/archive", Component: HutbaLive },
       { path: "hutba-live/templates", Component: HutbaLive },
       { path: "hutba-live/sessions/:id", Component: HutbaLiveDetail },
+      { path: "hutba-live/:id", Component: HutbaLiveDetail }, // Session detail route
       // Podcast Companion with submenus
+      { path: "podcast-companion", Component: PodcastCompanion }, // Default route
       { path: "podcast-companion/sessions", Component: PodcastCompanion },
       { path: "podcast-companion/live", Component: PodcastCompanion },
       { path: "podcast-companion/published", Component: PodcastCompanion },
@@ -133,6 +137,7 @@ export const router = createBrowserRouter([
       { path: "podcast-companion/sessions/:id", Component: PodcastCompanionDetail },
       { path: "podcast-companion/:id", Component: PodcastCompanionDetail }, // Legacy route for backward compatibility
       // Studio with submenus
+      { path: "studio", Component: Studio }, // Default route redirects to jobs
       { path: "studio/jobs", Component: Studio },
       { path: "studio/upload", Component: Studio },
       { path: "studio/public", Component: Studio },
@@ -197,5 +202,9 @@ export const router = createBrowserRouter([
   {
     path: "/signup",
     Component: Signup,
+  },
+  {
+    path: "/test-route",
+    Component: TestRoute,
   },
 ]);
