@@ -1,0 +1,1 @@
+export { HutbaLiveDetail } from './LiveSermonDetail';
