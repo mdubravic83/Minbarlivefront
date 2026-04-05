@@ -5,6 +5,7 @@ import { HutbaLive } from "./components/HutbaLive";
 import { HutbaLiveDetail } from "./components/HutbaLiveDetail";
 import { PodcastCompanion } from "./components/PodcastCompanion";
 import { PodcastCompanionDetail } from "./components/PodcastCompanionDetail";
+import { PodcastCompanionNew } from "./components/PodcastCompanionNew";
 import { Studio } from "./components/Studio";
 import { StudioDetail } from "./components/StudioDetail";
 import { HutbaAsistent } from "./components/HutbaAsistent";
@@ -134,6 +135,7 @@ export const router = createBrowserRouter([
       { path: "podcast-companion/live", Component: PodcastCompanion },
       { path: "podcast-companion/published", Component: PodcastCompanion },
       { path: "podcast-companion/access", Component: PodcastCompanion },
+      { path: "podcast-companion/new", Component: PodcastCompanionNew },
       { path: "podcast-companion/sessions/:id", Component: PodcastCompanionDetail },
       { path: "podcast-companion/:id", Component: PodcastCompanionDetail }, // Legacy route for backward compatibility
       // Studio with submenus
