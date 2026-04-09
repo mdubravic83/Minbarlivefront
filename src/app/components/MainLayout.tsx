@@ -45,6 +45,8 @@ import {
 } from "lucide-react";
 import { MinaretIcon, MosqueIconSimple } from "./icons/MosqueIcon";
 import { IslamicStar } from "./icons/IslamicStar";
+import { OctagonalStar } from "./icons/OctagonalStar";
+import minbarLiveLogo from "figma:asset/2349625403c50d44935dfca0c2b0a36dce0c05c5.png";
 
 // Simulated user role and modules
 const userRole = "Owner"; // Owner, Super Admin, Admin
@@ -332,6 +334,7 @@ export function MainLayout() {
     Dashboard: true,
     HutbaLive: true,
   });
+  const [clickedMenuItem, setClickedMenuItem] = useState<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -378,16 +381,20 @@ export function MainLayout() {
         <div className="h-14 sm:h-16 flex items-center justify-between px-4 border-b border-[#CBD5E1] bg-gradient-to-r from-[#F0FDFA] to-white">
           {(!sidebarCollapsed || mobileMenuOpen) && (
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-[#0F766E] via-[#14B8A6] to-[#0F766E] rounded-lg flex items-center justify-center shadow-md">
-                <MosqueIconSimple size={16} className="text-white sm:w-[18px] sm:h-[18px]" />
-              </div>
+              <img 
+                src={minbarLiveLogo} 
+                alt="MinbarLive Logo" 
+                className="w-8 h-8 sm:w-9 sm:h-9 object-contain"
+              />
               <span className="font-semibold text-[#0F172A] text-sm sm:text-base">MinbarLive</span>
             </div>
           )}
           {sidebarCollapsed && !mobileMenuOpen && (
-            <div className="w-8 h-8 bg-gradient-to-br from-[#0F766E] via-[#14B8A6] to-[#0F766E] rounded-lg flex items-center justify-center shadow-md mx-auto">
-              <MosqueIconSimple size={18} className="text-white" />
-            </div>
+            <img 
+              src={minbarLiveLogo} 
+              alt="MinbarLive Logo" 
+              className="w-8 h-8 object-contain mx-auto"
+            />
           )}
           {/* Close button on mobile */}
           <button
@@ -461,21 +468,41 @@ export function MainLayout() {
                   <div className="ml-7 sm:ml-9 mt-1 space-y-0.5">
                     {group.items.map((item: any) => {
                       const isActive = location.pathname === item.path;
+                      const itemClicked = clickedMenuItem === item.path;
+                      
                       return (
                         <Link
                           key={item.path}
                           to={item.path}
-                          onClick={handleLinkClick}
+                          onClick={(e) => {
+                            setClickedMenuItem(item.path);
+                            setTimeout(() => setClickedMenuItem(null), 600);
+                            handleLinkClick();
+                          }}
                           className={`flex items-center gap-2 px-2 sm:px-3 py-1.5 rounded-lg text-sm transition-colors ${
                             isActive
                               ? "bg-[#0F766E]/10 text-[#0F766E] font-medium"
                               : "text-[#64748B] hover:bg-[#F8FAFC] hover:text-[#0F172A]"
                           }`}
                         >
-                          <IslamicStar 
-                            size={8} 
-                            className={isActive ? "text-[#0F766E]" : "text-[#CBD5E1]"} 
-                          />
+                          <div className="relative w-[8px] h-[8px]">
+                            <IslamicStar 
+                              size={8} 
+                              className={`absolute inset-0 transition-all duration-300 ${
+                                isActive ? "text-[#0F766E]" : "text-[#CBD5E1]"
+                              } ${
+                                itemClicked ? "opacity-0 scale-0 rotate-180" : "opacity-100 scale-100 rotate-0"
+                              }`}
+                            />
+                            <OctagonalStar 
+                              size={8} 
+                              className={`absolute inset-0 transition-all duration-300 ${
+                                isActive ? "text-[#D4AF37]" : "text-[#0F766E]"
+                              } ${
+                                itemClicked ? "opacity-100 scale-125 rotate-0" : "opacity-0 scale-0 rotate-180"
+                              }`}
+                            />
+                          </div>
                           <span>{item.name}</span>
                         </Link>
                       );
